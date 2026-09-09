@@ -20,7 +20,7 @@ CREATE TABLE ranks (
 CREATE TABLE teacher (
     teacher_id INT PRIMARY KEY,
     first_name TEXT NOT NULL,
-    surname_name TEXT NOT NULL,
+    surname TEXT NOT NULL,
     last_name TEXT NOT NULL,
     date_of_birth DATE NOT NULL,
     department_id INT REFERENCES departments(department_id),
