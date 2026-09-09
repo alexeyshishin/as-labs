@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-omsu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-omsu}
+      TASK_DATABASES: ${TASK_DATABASES:-task1,task2,task3,task4,task5,task6,task7}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-omsu} -d ${POSTGRES_DB:-omsu}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
